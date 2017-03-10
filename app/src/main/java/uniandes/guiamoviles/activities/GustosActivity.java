@@ -1,39 +1,38 @@
-package uniandes.guiamoviles;
+package uniandes.guiamoviles.activities;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import uniandes.guiamoviles.R;
 import uniandes.guiamoviles.adapters.ImageAdapter;
-import uniandes.guiamoviles.entities.Imagen;
+import uniandes.guiamoviles.entities.Pais;
 import uniandes.guiamoviles.entities.Pedido;
-import uniandes.guiamoviles.entities.ResponseMessage;
 import uniandes.guiamoviles.rest.RestClient;
 
 public class GustosActivity extends AppCompatActivity {
 
-    ListView listView;
-    List<Imagen> gustos;
-    Pedido seleccionados;
+    ListView listGustosView;
+    List<Pais> gustos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gustos);
-        listView= (ListView) findViewById(R.id.gustos_listview);
+        listGustosView = (ListView) findViewById(R.id.gustos_listview);
+        listGustosView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,7 +42,19 @@ public class GustosActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                saveGustos(seleccionados,view);
+                ArrayList<Pais> seleccionados = new ArrayList<Pais>();
+                int len = listGustosView.getCount();
+                SparseBooleanArray checked = listGustosView.getCheckedItemPositions();
+                for (int i = 0; i < len; i++)
+                    if (checked.get(i)) {
+                        Pais paisSeleccionado = gustos.get(i);
+                        seleccionados.add(paisSeleccionado);
+  /* do whatever you want with the checked item */
+                    }
+                Intent intent = new Intent().putExtra("gustosSeleccionados", seleccionados);
+                //intent.putExtra("num_paises", checked.size()+"");
+                setResult(RESULT_OK, intent);
+                finish();
 
 
 
@@ -51,11 +62,11 @@ public class GustosActivity extends AppCompatActivity {
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listGustosView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                Imagen gusto=gustos.get(i);
+                Pais gusto=gustos.get(i);
                 gusto.setSelected(!gusto.isSelected());
                 if(gusto.isSelected()){
                     view.setAlpha(1f);
@@ -98,18 +109,18 @@ public class GustosActivity extends AppCompatActivity {
 
     public void getGustos(){
 
-        Call<List<Imagen>> call = RestClient.getInstance().getApiService().getIntereses();
-        call.enqueue(new Callback<List<Imagen>>() {
+        Call<List<Pais>> call = RestClient.getInstance().getApiService().getIntereses();
+        call.enqueue(new Callback<List<Pais>>() {
             @Override
-            public void onResponse(Call<List<Imagen>> call, Response<List<Imagen>> response) {
+            public void onResponse(Call<List<Pais>> call, Response<List<Pais>> response) {
                 gustos = response.body();
                 ImageAdapter itemsAdapter = new ImageAdapter(GustosActivity.this,gustos);
-                listView.setAdapter(itemsAdapter);
+                listGustosView.setAdapter(itemsAdapter);
 
             }
 
             @Override
-            public void onFailure(Call<List<Imagen>> call, Throwable t) {
+            public void onFailure(Call<List<Pais>> call, Throwable t) {
 
             }
         });

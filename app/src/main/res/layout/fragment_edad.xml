@@ -26,7 +26,7 @@
             android:id="@+id/propina_text" />
 
         <Button
-            android:text="18 años"
+            android:text="+1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/mas" />

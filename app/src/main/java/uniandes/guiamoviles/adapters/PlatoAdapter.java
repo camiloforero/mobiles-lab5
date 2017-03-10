@@ -12,9 +12,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import uniandes.guiamoviles.MainActivity;
+import uniandes.guiamoviles.activities.PaisesActivity;
 import uniandes.guiamoviles.R;
-import uniandes.guiamoviles.entities.Imagen;
+import uniandes.guiamoviles.entities.Pais;
 
 /**
  * Created by ASUS on 19/02/2017.
@@ -22,13 +22,13 @@ import uniandes.guiamoviles.entities.Imagen;
 
 public class PlatoAdapter extends BaseAdapter{
 
-    private List<Imagen> platos;
+    private List<Pais> platos;
     private Context context;
     private static LayoutInflater inflater=null;
 
-    public PlatoAdapter(MainActivity mainActivity,List<Imagen> platosList){
+    public PlatoAdapter(PaisesActivity paisesActivity, List<Pais> platosList){
         this.platos= platosList;
-        this.context= mainActivity;
+        this.context= paisesActivity;
         inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -51,7 +51,7 @@ public class PlatoAdapter extends BaseAdapter{
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        Imagen plato= platos.get(i);
+        Pais plato= platos.get(i);
         if(view==null)
             view = inflater.inflate(R.layout.platos_item,null);
 

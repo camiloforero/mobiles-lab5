@@ -8,18 +8,22 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import uniandes.guiamoviles.GustosActivity;
-import uniandes.guiamoviles.MainActivity;
+import java.util.ArrayList;
+
 import uniandes.guiamoviles.R;
+import uniandes.guiamoviles.entities.Pais;
 
 public class WelcomeActivity extends AppCompatActivity {
 
-    private final static int WELCOME=1111;
-    private final static String TAG="WELCOME";
+    private final static int PAISES =1; //El atributo de requestCode sirve para identificar la actividad desde la cual se regresa. Por eso, debe ser diferente para las dos actividades
+    private final static int GUSTOS =2;
+    private final static String TAG_PAISES ="PAISES"; //Estos sirven para hacer logs, también debe ser distinto de acuerdo a la actividad
+    private final static String TAG_GUSTOS ="GUSTOS";
     Button btnPaises;
     Button btnGustos;
     Button btnRegistrar;
@@ -44,8 +48,8 @@ public class WelcomeActivity extends AppCompatActivity {
         btnPaises.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(WelcomeActivity.this, MainActivity.class);
-                startActivityForResult(i,WELCOME);
+                Intent i= new Intent(WelcomeActivity.this, PaisesActivity.class);
+                startActivityForResult(i, PAISES);
             }
         });
 
@@ -54,7 +58,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(WelcomeActivity.this, GustosActivity.class);
-                startActivityForResult(i,WELCOME);
+                startActivityForResult(i, GUSTOS);
             }
         });
 
@@ -82,7 +86,7 @@ public class WelcomeActivity extends AppCompatActivity {
             protected Void doInBackground(Void... params) {
                 try {
 
-                    Log.d(TAG,"start task");
+                    Log.d(TAG_PAISES,"start task");
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -103,16 +107,21 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d(TAG,"Llega el resultado de otra actividad");
-        if(requestCode==WELCOME){
+        if(requestCode== PAISES){
             if(resultCode==RESULT_OK){
-                btnGustos.setText("√");
-                btnGustos.setEnabled(false);
-            }else if(resultCode==2){
+                Log.d(TAG_PAISES,"Llega el resultado de la actividad paises");
+                ArrayList<Pais> seleccionados = (ArrayList<Pais>) data.getSerializableExtra("paisesSeleccionados");
+                btnPaises.setText(TextUtils.join(", ", seleccionados));
+                //btnPaises.setEnabled(false);
+            }
+        }
 
-                    btnPaises.setText("√");
-                    btnPaises.setEnabled(false);
-
+        else if(requestCode== GUSTOS){
+            Log.d(TAG_GUSTOS,"Llega el resultado de la actividad gustos");
+            if(resultCode==RESULT_OK){
+                ArrayList<Pais> seleccionados = (ArrayList<Pais>) data.getSerializableExtra("gustosSeleccionados");
+                btnGustos.setText(TextUtils.join(", ", seleccionados));
+                //btnGustos.setEnabled(false);
             }
         }
     }

@@ -6,7 +6,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import uniandes.guiamoviles.entities.Imagen;
+import uniandes.guiamoviles.entities.Pais;
 import uniandes.guiamoviles.entities.Pedido;
 import uniandes.guiamoviles.entities.ResponseMessage;
 
@@ -17,9 +17,9 @@ import uniandes.guiamoviles.entities.ResponseMessage;
 public interface ApiService {
 
     @GET("/interests")
-    Call<List<Imagen>> getIntereses();
+    Call<List<Pais>> getIntereses();
     @GET("/paises")
-    Call<List<Imagen>> getPaises();
+    Call<List<Pais>> getPaises();
     @POST("/interests")
     Call<ResponseMessage> saveIntereses(@Body Pedido pedido);
 

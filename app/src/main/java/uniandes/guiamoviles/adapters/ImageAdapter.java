@@ -13,10 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import uniandes.guiamoviles.MainActivity;
-
 import uniandes.guiamoviles.R;
-import uniandes.guiamoviles.entities.Imagen;
+import uniandes.guiamoviles.entities.Pais;
 
 /**
  * Created by ASUS on 19/02/2017.
@@ -24,12 +22,12 @@ import uniandes.guiamoviles.entities.Imagen;
 
 public class ImageAdapter extends BaseAdapter {
 
-    private List<Imagen> platos;
+    private List<Pais> paises;
     private Context context;
     private static LayoutInflater inflater=null;
 
-    public ImageAdapter(Activity mainActivity, List<Imagen> platosList){
-        this.platos= platosList;
+    public ImageAdapter(Activity mainActivity, List<Pais> paisList){
+        this.paises = paisList;
         this.context= mainActivity;
         inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -37,7 +35,7 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return platos.size();
+        return paises.size();
     }
 
     @Override
@@ -53,7 +51,7 @@ public class ImageAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
-        Imagen plato= platos.get(i);
+        Pais pais= paises.get(i);
         if(view==null)
             view = inflater.inflate(R.layout.pais_item,null);
 
@@ -62,18 +60,18 @@ public class ImageAdapter extends BaseAdapter {
         ImageView imageView = (ImageView) view.findViewById(R.id.imagen_pais);
         TextView descripcion = (TextView) view.findViewById(R.id.descripcion);
 
-        //nombreTextView.setText(plato.getNombre());
-        //precioTextView.setText("$"+ plato.getPrecio());
+        //nombreTextView.setText(pais.getNombre());
+        //precioTextView.setText("$"+ pais.getPrecio());
 
 
         Picasso.with(context)
-                .load(plato.getImagen())
+                .load(pais.getImagen())
                 .resize(600,200)
                 .centerCrop()
                 .into(imageView);
 
-        descripcion.setText(plato.getNombre());
-        if(plato.isSelected()){
+        descripcion.setText(pais.getNombre());
+        if(pais.isSelected()){
             view.setAlpha(1f);
         }else{
             view.setAlpha(0.5f);
