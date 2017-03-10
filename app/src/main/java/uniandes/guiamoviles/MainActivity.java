@@ -3,6 +3,7 @@ package uniandes.guiamoviles;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.PersistableBundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uniandes.guiamoviles.adapters.ImageAdapter;
 import uniandes.guiamoviles.entities.Imagen;
+import uniandes.guiamoviles.entities.Pedido;
 import uniandes.guiamoviles.rest.RestClient;
 
 public class MainActivity extends AppCompatActivity {
@@ -88,7 +90,21 @@ public class MainActivity extends AppCompatActivity {
             listView.setAdapter(itemsAdapter);
         }
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.save_btn);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                savePaises();
+            }
+        });
 
+
+    }
+
+    public void savePaises() {
+        Intent intent = new Intent();
+        setResult(2, intent);
+        finish();
     }
 
     @Override

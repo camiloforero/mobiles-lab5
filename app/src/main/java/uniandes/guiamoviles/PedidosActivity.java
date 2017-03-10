@@ -54,7 +54,7 @@ public class PedidosActivity extends AppCompatActivity {
         String lugar= ((TextView)findViewById(R.id.lugar_pedido)).getText().toString();
         Pedido pedido= new Pedido(cliente,lugar,platoId);
 
-        Call<ResponseMessage> call= RestClient.getInstance().getApiService().createPedido(pedido);
+        Call<ResponseMessage> call= RestClient.getInstance().getApiService().saveIntereses(pedido);
         call.enqueue(new Callback<ResponseMessage>() {
             @Override
             public void onResponse(Call<ResponseMessage> call, Response<ResponseMessage> response) {

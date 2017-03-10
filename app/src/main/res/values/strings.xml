@@ -6,4 +6,8 @@
     <string name="place_order">REALIZAR PEDIDO</string>
     <string name="open_modal">MENU</string>
     <string name="title_activity_gustos">GustosActivity</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

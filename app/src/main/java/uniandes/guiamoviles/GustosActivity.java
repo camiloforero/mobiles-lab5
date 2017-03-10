@@ -1,5 +1,6 @@
 package uniandes.guiamoviles;
 
+import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,12 +19,15 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import uniandes.guiamoviles.adapters.ImageAdapter;
 import uniandes.guiamoviles.entities.Imagen;
+import uniandes.guiamoviles.entities.Pedido;
+import uniandes.guiamoviles.entities.ResponseMessage;
 import uniandes.guiamoviles.rest.RestClient;
 
 public class GustosActivity extends AppCompatActivity {
 
     ListView listView;
     List<Imagen> gustos;
+    Pedido seleccionados;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +42,11 @@ public class GustosActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                saveGustos(seleccionados,view);
+
+
+
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,6 +71,29 @@ public class GustosActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void saveGustos(Pedido gustos, final View v){
+        Intent intent=new Intent();
+        setResult(RESULT_OK,intent);
+        finish();
+        /*
+        Call<ResponseMessage> call= RestClient.getInstance().getApiService().saveIntereses(gustos);
+        call.enqueue(new Callback<ResponseMessage>() {
+            @Override
+            public void onResponse(Call<ResponseMessage> call, Response<ResponseMessage> response) {
+                ResponseMessage res=response.body();
+                Snackbar.make(v, "Se guardaron tus preferencias", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMessage> call, Throwable t) {
+
+            }
+        });
+
+        */
     }
 
     public void getGustos(){

@@ -21,6 +21,6 @@ public interface ApiService {
     @GET("/paises")
     Call<List<Imagen>> getPaises();
     @POST("/interests")
-    Call<ResponseMessage> createPedido(@Body Pedido pedido);
+    Call<ResponseMessage> saveIntereses(@Body Pedido pedido);
 
 }
